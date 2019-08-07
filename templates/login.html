@@ -1,0 +1,11 @@
+{{template "head" "登入"}}
+{{template "header" .}}
+<h1>登入</h1>
+<form action="/login" method="post">
+    <p>Email</p>
+    <input type="text" name="email" id=""><br>
+    <p>Password</p>
+    <input type="password" name="password" id=""><br>
+    <input type="submit" value="登入">
+</form>
+{{template "footer" .}}

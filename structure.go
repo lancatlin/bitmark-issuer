@@ -1,8 +1,8 @@
-package model
+package main
 
 import (
-	"github.com/jinzhu/gorm"
 	"time"
+	"io"
 )
 
 type Asset struct {
@@ -27,12 +27,23 @@ type Issue struct {
 }
 
 type User struct {
-	gorm.Model
-	Email string `gorm:"unique"`
+	ID uint 
+	CreatedAt time.Time 
+	UpdatedAt time.Time
+	Email string `gorm:"unique" form:"email"`
 	// 簽署用名稱
-	Name     string
+	Name     string `form:"name"`
+	PlainPassword string `form:"password" gorm:"-"`
 	Password []byte
 	// 儲存 account seed
 	Wallet string
 	Assets []Asset
+	IsLogin bool `gorm:"-"`
+}
+
+type Message struct {
+	Title string
+	Content string
+	Target string
+	TargetName string
 }
