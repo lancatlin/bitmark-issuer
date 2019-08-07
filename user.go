@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
 	"github.com/bitmark-inc/bitmark-sdk-go/account"
+	"net/http"
 )
 
 func SignUp(c *gin.Context) {
@@ -35,5 +36,9 @@ func SignUp(c *gin.Context) {
 
 func Login(c *gin.Context) {
 	// 登入帳號
+	var user User
+	if err := c.ShouldBind(&user); err != nil {
+		http.Error(c.Writer, err.Error(), 500)
+	}
 	
 }
