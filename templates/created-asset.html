@@ -1,0 +1,7 @@
+{{template "head" "資產建立成功"}}
+{{template "header" .}}
+<h1>資產建立成功</h1>
+<h3>限時分享連結</h3>
+<a href="/assets/{{.Asset.ID}}">https://{{.HostName}}/assets/{{.Asset.ID}}</a>
+<img src="/static/qrcodes/{{.Asset.ID}}.png" alt="">
+{{template "footer" .}}

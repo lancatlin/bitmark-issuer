@@ -1,0 +1,9 @@
+{{template "head" printf "取得 %q" .Asset.Name}}
+{{template "header" .}}
+<h1>取得資產 {{.Asset.Name}}</h1>
+<form action="/issues" method="post">
+    <input type="text" name="asset_id" id="" value="{{.Asset.ID}}" readonly hidden>
+    <input type="text" name="address" id="" required autofocus>
+    <input type="submit" value="取得資產">
+</form>
+{{template "footer" .}}

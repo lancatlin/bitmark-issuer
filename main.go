@@ -53,5 +53,12 @@ func main() {
 		c.HTML(200, "login.html", nil)
 	})
 	r.POST("/login", login)
+	r.GET("/assets/new", func (c *gin.Context) {
+		if !getUser(c).IsLogin {
+			c.Redirect(303, "/login")
+			return
+		}
+		c.HTML(200, "new-asset.html", nil)
+	})
 	r.Run()
 }

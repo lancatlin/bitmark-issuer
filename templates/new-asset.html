@@ -1,0 +1,15 @@
+{{template "head" "新增資產"}}
+{{template "header" .}}
+<h1>新增資產</h1>
+<form action="/assets">
+    <p>上傳檔案</p>
+    <input type="file" name="file" id=""><br>
+    <p>資產名稱</p>
+    <input type="text" name="asset_name" id=""><br>
+    <p>數量</p>
+    <input type="number" name="amount" id=""><br>
+    <p>連結有效期限（天）</p>
+    <input type="number" name="expires" id="" value="1"><br>
+    <input type="submit" value="建立資產">
+</form>
+{{template "footer" .}}
