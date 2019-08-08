@@ -4,10 +4,9 @@ import (
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
 	"github.com/bitmark-inc/bitmark-sdk-go/account"
-	"net/http"
 )
 
-func SignUp(c *gin.Context) {
+func signUp(c *gin.Context) {
 	// 註冊帳號
 	// 為使用者創建錢包
 	var user User
@@ -32,13 +31,4 @@ func SignUp(c *gin.Context) {
 	// 註冊成功
 	page := Message{"註冊成功", "註冊成功，登入後即可使用", "/login", "登入"}
 	c.HTML(200, "msg.html", page)
-}
-
-func Login(c *gin.Context) {
-	// 登入帳號
-	var user User
-	if err := c.ShouldBind(&user); err != nil {
-		http.Error(c.Writer, err.Error(), 500)
-	}
-	
 }

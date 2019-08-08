@@ -1,11 +1,13 @@
 {{template "head" "登入"}}
 {{template "header" .}}
 <h1>登入</h1>
-<form action="/login" method="post">
+<form id="login_form" onsubmit="return false">
     <p>Email</p>
     <input type="text" name="email" id=""><br>
     <p>Password</p>
     <input type="password" name="password" id=""><br>
-    <input type="submit" value="登入">
+    <input type="submit" value="登入"><br>
+    <p hidden id="error_msg">登入失敗！帳號或密碼錯誤</p>
 </form>
+<script src="/static/js/login.js"></script>
 {{template "footer" .}}

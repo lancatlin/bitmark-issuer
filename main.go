@@ -36,8 +36,22 @@ func init() {
 func main() {
 	r := gin.Default()
 	r.LoadHTMLGlob("./templates/*.html")
-	r.GET("/sign-up", func (c *gin.Context) { c.HTML(200, "sign-up.html", nil) })
-	r.POST("/sign-up", SignUp)
-	r.GET("/login", func (c *gin.Context) { c.HTML(200, "login.html", nil) })
+	r.Static("/static", "./static")
+	r.GET("/sign-up", func (c *gin.Context) {
+		if getUser(c).IsLogin {
+			c.Redirect(303, "/")
+			return
+		}
+		c.HTML(200, "sign-up.html", nil)
+	})
+	r.POST("/sign-up", signUp)
+	r.GET("/login", func (c *gin.Context) {
+		if getUser(c).IsLogin {
+			c.Redirect(303, "/")
+			return
+		}
+		c.HTML(200, "login.html", nil)
+	})
+	r.POST("/login", login)
 	r.Run()
 }
