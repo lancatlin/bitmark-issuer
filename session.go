@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/pborman/uuid"
 	"github.com/gin-gonic/gin"
+	"github.com/pborman/uuid"
 	"golang.org/x/crypto/bcrypt"
 	"log"
 	"net/http"
@@ -22,7 +22,7 @@ func getUser(c *gin.Context) User {
 	if _, ok := sessions[sessID]; !ok {
 		return User{IsLogin: false}
 	}
-	var user User 
+	var user User
 	if err := db.First(&user, sessions[sessID]).Error; err != nil {
 		panic(err)
 	}
@@ -56,8 +56,8 @@ func login(c *gin.Context) {
 	sessions[sessID] = user.ID
 	// response success
 	http.SetCookie(c.Writer, &http.Cookie{
-		Name: "session",
-		Value: sessID,
+		Name:    "session",
+		Value:   sessID,
 		Expires: time.Now().Add(time.Minute * 30),
 	})
 }

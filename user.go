@@ -1,9 +1,9 @@
 package main
 
 import (
+	"github.com/bitmark-inc/bitmark-sdk-go/account"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
-	"github.com/bitmark-inc/bitmark-sdk-go/account"
 )
 
 func signUp(c *gin.Context) {
