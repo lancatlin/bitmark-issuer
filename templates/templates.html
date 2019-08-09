@@ -3,12 +3,24 @@
 <html>
     <head>
         <title>{{.}}</title>
+        <link rel="stylesheet" href="/static/css/style.css">
+        <script src="/static/js/style.js" defer></script>
     </head>
 {{end}}
 {{define "header"}}
     <body>
         <header>
-
+            <div class="features">
+                <a href="" class="feature">webName</a>
+                <!-- 連結(herf可放html) -->
+                <a href="" class="feature">feature</a>
+                <a href="" class="feature">feature</a>
+                <a href="" class="feature">feature</a>
+            </div>
+            <div class="info">
+                <div class="userName">user</div>
+                <a href="" class="loginBu">login</a>
+            </div>
         </header>
         <main>
 {{end}}

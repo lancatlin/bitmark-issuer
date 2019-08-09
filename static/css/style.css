@@ -1,0 +1,127 @@
+@keyframes tagOn{
+    100%{
+        background-color: rgb(15, 29, 124);
+        color: white;
+    }
+}
+@keyframes tagOff{
+    100%{
+        color: rgb(8, 18, 80);
+    }
+}
+
+body{
+    margin: 0;
+    height: 90%;
+    background-color: rgb(192, 192, 192);
+    background-image: url('back.jpg') ;
+    font-family: '微軟正黑體';/* 字型 */
+}
+
+main{
+    padding: 5%;
+    
+}
+
+header{
+    height: 40px;
+    background-color: rgb(153, 226, 255);
+    color: rgb(4, 15, 51);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.features{
+    height: 40px;
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+.feature{
+    height: 40px;
+    padding-left: 8px;
+    padding-right: 8px;
+    margin-left: 20px;
+    line-height: 40px;
+    font-size: 25px;
+    text-decoration: none;
+    text-align: center;
+}
+.info{
+    height: 40px;
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+.userName{
+    height: 40px;
+    padding-left: 8px;
+    padding-right: 8px;
+    margin-right: 10px;
+    line-height: 40px;
+    font-size: 25px;
+    text-align: center;
+}
+.loginBu{
+    height: 40px;
+    color: rgb(8, 18, 80);
+    margin-left: 15px;
+    margin-right: 15px;
+    line-height: 40px;
+    font-size: 25px;
+    text-decoration: none;
+    text-align: center;
+}
+
+.menu{
+    width: 35px;
+    height: 35px;
+    margin-right: 10px;
+}
+
+form{
+    margin: 0 auto;
+    width: 40%;
+    font-size: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color:white;
+    border-radius: 5px 5px 5px 5px;
+}
+
+h1{
+    text-align: center;
+    color:white;
+}
+
+p{
+    text-align: center;
+    margin-top: 10px;
+    margin-block-end: 5px;
+}
+
+input[type="text"],input[type="password"]{
+    width: 60%;
+    margin-left: 20%;
+    margin-right: 20%;
+    height: 18px;
+}
+
+input[type="submit"]{
+    box-shadow:4px 4px 3px rgba(20%,20%,40%,0.5);
+    margin: 0 auto;
+    display: block;
+    width: 80px;
+    height: 30px;
+    margin-top: 20px;
+    background-color: rgb(0, 132, 255);
+    color: white;
+    border: 0;
+    font-family: '微軟正黑體';/* 字型 */
+}
+
+input[type="submit"]:hover{
+    box-shadow:0;
+    
+}
