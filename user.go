@@ -9,6 +9,7 @@ import (
 func signUp(c *gin.Context) {
 	// 註冊帳號
 	// 為使用者創建錢包
+	// Handle Ajax
 	var user User
 	var err error
 	if err = c.ShouldBind(&user); err != nil {
@@ -26,9 +27,12 @@ func signUp(c *gin.Context) {
 	if err := db.Create(&user).Error; err != nil {
 		// something went wrong
 		// 可能是帳號重複
-		panic(err)
+		if err.Error() == "UNIQUE constraint failed: users.email" {
+			c.String(401, "email already used")
+		} else {
+			panic(err)
+		}
 	}
 	// 註冊成功
-	page := Message{"註冊成功", "註冊成功，登入後即可使用", "/login", "登入"}
-	c.HTML(200, "msg.html", page)
+	login(c)
 }

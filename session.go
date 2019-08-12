@@ -1,12 +1,13 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/pborman/uuid"
-	"golang.org/x/crypto/bcrypt"
 	"log"
 	"net/http"
 	"time"
+
+	"github.com/gin-gonic/gin"
+	"github.com/pborman/uuid"
+	"golang.org/x/crypto/bcrypt"
 )
 
 // sessions stores "session id: user id"
@@ -60,4 +61,15 @@ func login(c *gin.Context) {
 		Value:   sessID,
 		Expires: time.Now().Add(time.Minute * 30),
 	})
+}
+
+func logout(c *gin.Context) {
+	user := getUser(c)
+	if !user.IsLogin {
+		c.Redirect(303, "/")
+		return
+	}
+	sessionID, _ := c.Cookie("session")
+	delete(sessions, sessionID)
+	c.Redirect(303, "/")
 }

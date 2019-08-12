@@ -11,15 +11,19 @@
     <body>
         <header>
             <div class="features">
-                <a href="" class="feature">webName</a>
+                <a href="" class="feature">Bitmark Issuer</a>
                 <!-- 連結(herf可放html) -->
                 <a href="" class="feature">feature</a>
                 <a href="" class="feature">feature</a>
                 <a href="" class="feature">feature</a>
             </div>
             <div class="info">
-                <div class="userName">user</div>
-                <a href="" class="loginBu">login</a>
+                {{if .IsLogin}}
+                <div class="userName">{{.Name}}</div>
+                <a href="/logout" class="loginBu">logout</a>
+                {{else}}
+                <a href="/login" class="loginBu">login</a>
+                {{end}}
             </div>
         </header>
         <main>

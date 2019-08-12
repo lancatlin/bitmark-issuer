@@ -1,13 +1,15 @@
 {{template "head" "註冊"}}
 {{template "header" .}}
+<script src="/static/js/signup.js" defer></script>
 <h1>註冊</h1>
-<form action="/sign-up" method="post">
+<form id="signup_form" onsubmit="return false">
     <p>Email</p>
     <input type="text" name="email" id=""><br>
     <p>Password</p>
     <input type="password" name="password" id=""><br>
     <p>User Name</p>
     <input type="text" name="name" id=""><br>
-    <input type="submit" value="註冊">
+    <input type="submit" value="註冊"><br>
+    <p hidden id="error_msg"></p>
 </form>
 {{template "footer" .}}

@@ -1,20 +1,24 @@
 package main
 
 import (
-	"io"
 	"time"
+
+	"github.com/bitmark-inc/bitmark-sdk-go/account"
 )
 
+// Asset record a file an its every issues
 type Asset struct {
 	// bitmark asset id
-	ID       string `gorm:"primary_key"`
-	Name     string `form:"name"`
-	Amount   int    `form:"amount"`
-	Issues   []Issue
-	Owner    User
-	UserID   uint
+	ID     string `gorm:"primary_key"`
+	Name   string `form:"name"`
+	Amount int    `form:"amount"`
+	Issues []Issue
+	Owner  User
+	UserID uint
 }
 
+// Issue belongs to an Asset
+// Issue record its Reciever
 type Issue struct {
 	ID      string
 	Asset   Asset
@@ -25,6 +29,7 @@ type Issue struct {
 	TransferredAt time.Time
 }
 
+// User ...
 type User struct {
 	ID        uint
 	CreatedAt time.Time
@@ -40,18 +45,22 @@ type User struct {
 	IsLogin bool `gorm:"-"`
 }
 
+// Account return the bitmark account of a user
 func (u User) Account() account.Account {
 	acct, err := account.FromSeed(u.Wallet)
 	if err != nil {
 		panic(err)
 	}
-	if !account.IsValidAccountNumber(acct.AccountNumber) {
-		panic("Account is not valid")
-	}
+	/*
+		This function is not use anymore
+		if !account.IsValidAccountNumber(acct.AccountNumber) {
+			panic("Account is not valid")
+		}
+	*/
 	return acct
 }
 
-type Message struct {
+type message struct {
 	Title      string
 	Content    string
 	Target     string

@@ -1,7 +1,7 @@
 {{template "head" "新增資產"}}
 {{template "header" .}}
 <h1>新增資產</h1>
-<form action="/assets">
+<form action="/assets" method="POST" enctype="multipart/form-data">
     <p>上傳檔案</p>
     <input type="file" name="file" id=""><br>
     <p>資產名稱</p>
