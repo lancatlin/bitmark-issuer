@@ -8,7 +8,8 @@ import (
 func TestRegister(t *testing.T) {
 	var user User
 	if err := db.First(&user).Error; err != nil {
-		t.Error(err)
+		t.Error("No user is found, exit...")
+		return
 	}
 	var data = make([]byte, 128)
 	_, err := rand.Read(data)
@@ -16,15 +17,17 @@ func TestRegister(t *testing.T) {
 		t.Error(err)
 	}
 	a := Asset{
-		Owner:  user,
+		User:   user,
 		Name:   "test asset",
 		Amount: 2,
 	}
 	if err = a.register(data); err != nil {
 		t.Error(err)
+		return
 	}
 	if err = a.issue(); err != nil {
 		t.Error(err)
+		return
 	}
 	if err := a.register(data); err == nil {
 		t.Error("register didn't return error: ", err)

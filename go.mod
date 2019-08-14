@@ -9,5 +9,6 @@ require (
 	github.com/jinzhu/gorm v1.9.10
 	github.com/joho/godotenv v1.3.0
 	github.com/pborman/uuid v1.2.0
+	github.com/skip2/go-qrcode v0.0.0-20190110000554-dc11ecdae0a9
 	golang.org/x/crypto v0.0.0-20190325154230-a5d413f7728c
 )

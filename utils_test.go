@@ -9,3 +9,9 @@ func TestRandomString(t *testing.T) {
 	}
 	t.Log(str)
 }
+
+func TestGenQRCode(t *testing.T) {
+	if err := genQRCode("test1125"); err != nil {
+		t.Error(err)
+	}
+}

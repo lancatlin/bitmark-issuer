@@ -1,2 +1,4 @@
 .env
 data.sqlite
+static/qrcodes
+bitmark-issuer

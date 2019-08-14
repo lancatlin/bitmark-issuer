@@ -27,7 +27,7 @@ func init() {
 	if err != nil {
 		panic(err)
 	}
-	db.AutoMigrate(&Asset{}, &Issue{}, &User{})
+	db.AutoMigrate(&Asset{}, &Issue{}, &User{}, &URL{})
 
 	env.Host = os.Getenv("HOST")
 
@@ -91,38 +91,49 @@ func index(c *gin.Context) {
 	c.HTML(200, "index.html", page)
 }
 
+func withCondition(callback func(*gin.Context), condition Condition) func(*gin.Context) {
+	return func(c *gin.Context) {
+		user := getUser(c)
+		if condition == ConditionLogin && !user.IsLogin {
+			// permission denied
+			page := struct {
+				User
+				message
+			}{
+				User: user,
+				message: message{
+					Title:      "權限不足",
+					Content:    "請登入後再訪問此頁面",
+					Target:     "/login",
+					TargetName: "登入",
+				},
+			}
+			c.HTML(401, "msg.html", page)
+			return
+		}
+		if condition == ConditionLogout && user.IsLogin {
+			// redirect to /
+			c.Redirect(303, "/")
+			return
+		}
+		callback(c)
+	}
+}
+
 func main() {
 	r := gin.Default()
 	r.LoadHTMLGlob("./templates/*.html")
 	r.Static("/static", "./static")
 	r.GET("/", index)
 	r.GET("/signup", staticPage("sign-up.html", ConditionLogout))
-	r.POST("/signup", signUp)
+	r.POST("/signup", withCondition(signUp, ConditionLogout))
 	r.GET("/login", staticPage("login.html", ConditionLogout))
-	r.POST("/login", login)
-	r.GET("/logout", logout)
+	r.POST("/login", withCondition(login, ConditionLogout))
+	r.GET("/logout", withCondition(logout, ConditionLogin))
 	r.GET("/new", staticPage("new-asset.html", ConditionLogin))
-	r.POST("/assets", newAsset)
-	r.GET("/assets/:id", func(c *gin.Context) {
-		user := getUser(c)
-		var a Asset
-		if err := db.Where("id = ?", c.Param("id")).First(&a).Error; err != nil {
-			// not found
-			c.String(404, err.Error())
-			return
-		}
-		page := struct {
-			User
-			Asset
-			Host string
-		}{
-			User:  user,
-			Asset: a,
-			Host:  env.Host,
-		}
-		c.HTML(200, "created-asset.html", page)
-	})
-	r.POST("/assets/:id", staticPage("", ConditionNotRequire))
-	r.GET("/assets/:id/get", getAsset)
+	r.POST("/assets", withCondition(newAsset, ConditionLogin))
+	r.GET("/assets/:id", withCondition(assetInfo, ConditionLogin))
+	r.GET("/get/:id", getAsset)
+	r.POST("/get/:id")
 	r.Run()
 }

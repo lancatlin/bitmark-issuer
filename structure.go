@@ -15,8 +15,9 @@ type Asset struct {
 	Amount    int    `form:"amount"`
 	CreatedAt time.Time
 	Issues    []Issue
-	Owner     User
+	User      User
 	UserID    uint
+	URL       *URL
 }
 
 // Issue belongs to an Asset
@@ -61,6 +62,19 @@ func (u User) Account() account.Account {
 		}
 	*/
 	return acct
+}
+
+// URL is the url token to access a asset
+type URL struct {
+	ID        string `gorm:"primary_key"`
+	Asset     Asset
+	AssetID   string
+	CreatedAt time.Time
+	ExpireAt  time.Time
+}
+
+func (u URL) String() string {
+	return u.ID
 }
 
 type message struct {
