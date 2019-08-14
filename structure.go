@@ -8,13 +8,15 @@ import (
 
 // Asset record a file an its every issues
 type Asset struct {
-	// bitmark asset id
-	ID     string `gorm:"primary_key"`
-	Name   string `form:"name"`
-	Amount int    `form:"amount"`
-	Issues []Issue
-	Owner  User
-	UserID uint
+	// A random id
+	ID        string `gorm:"primary_key"`
+	AssetID   string
+	Name      string `form:"asset_name"`
+	Amount    int    `form:"amount"`
+	CreatedAt time.Time
+	Issues    []Issue
+	Owner     User
+	UserID    uint
 }
 
 // Issue belongs to an Asset
@@ -27,6 +29,7 @@ type Issue struct {
 	Reciever string
 	// 如果尚未轉移留空
 	TransferredAt time.Time
+	CreatedAt     time.Time
 }
 
 // User ...

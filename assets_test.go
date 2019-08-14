@@ -1,7 +1,7 @@
 package main
 
 import (
-	"io/ioutil"
+	"crypto/rand"
 	"testing"
 )
 
@@ -10,7 +10,8 @@ func TestRegister(t *testing.T) {
 	if err := db.First(&user).Error; err != nil {
 		t.Error(err)
 	}
-	data, err := ioutil.ReadFile("go.sum")
+	var data = make([]byte, 128)
+	_, err := rand.Read(data)
 	if err != nil {
 		t.Error(err)
 	}
@@ -21,5 +22,11 @@ func TestRegister(t *testing.T) {
 	}
 	if err = a.register(data); err != nil {
 		t.Error(err)
+	}
+	if err = a.issue(); err != nil {
+		t.Error(err)
+	}
+	if err := a.register(data); err == nil {
+		t.Error("register didn't return error: ", err)
 	}
 }

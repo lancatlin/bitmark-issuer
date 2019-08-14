@@ -16,16 +16,25 @@ var sessions = make(map[string]uint)
 func getUser(c *gin.Context) User {
 	// Get the user from session
 	// The session id is stored in cookie
-	sessID, err := c.Cookie("session")
-	if err != nil {
-		return User{IsLogin: false}
-	}
-	if _, ok := sessions[sessID]; !ok {
-		return User{IsLogin: false}
-	}
+	/*
+		sessID, err := c.Cookie("session")
+		if err != nil {
+			return User{IsLogin: false}
+		}
+		if _, ok := sessions[sessID]; !ok {
+			return User{IsLogin: false}
+		}
+		var user User
+		if err := db.First(&user, sessions[sessID]).Error; err != nil {
+			panic(err)
+		}
+		user.IsLogin = true
+		return user
+	*/
 	var user User
-	if err := db.First(&user, sessions[sessID]).Error; err != nil {
-		panic(err)
+	if err := db.First(&user).Error; err != nil {
+		user.IsLogin = false
+		return user
 	}
 	user.IsLogin = true
 	return user
