@@ -38,35 +38,57 @@ func assetInfo(c *gin.Context) {
 			panic(err)
 		}
 	}
+	var issues []Issue
+	var count int
+	if err := db.Where("asset_id = ?", a.ID).Find(&issues).Count(&count).Error; err != nil {
+		panic(err)
+	}
 	log.Println("fine after genQRCode")
 	page := struct {
 		User
 		Asset
-		Host string
+		Remainder int
+		Host      string
 	}{
-		User:  user,
-		Asset: a,
-		Host:  env.Host,
+		User:      user,
+		Asset:     a,
+		Remainder: count,
+		Host:      env.Host,
 	}
 	c.HTML(200, "asset-info.html", page)
 }
 
 func getAsset(c *gin.Context) {
 	// Everyone who has the url can access to this page
-	var a Asset
+	user := getUser(c)
+	var url URL
 	id := c.Param("id")
-	if err := db.Where("id = ?", id).First(&a).Error; err != nil {
+	if err := db.Where("id = ?", id).Preload("Asset").First(&url).Error; err != nil {
 		// record not found
 		c.String(404, err.Error())
 		return
 	}
-	user := getUser(c)
+	if time.Now().After(url.ExpireAt) {
+		// 連結失效
+		page := struct {
+			User
+			message
+		}{
+			User: user,
+			message: message{
+				Title:   "連結失效",
+				Content: "此連結已經過期",
+			},
+		}
+		c.HTML(403, "msg.html", page)
+		return
+	}
 	page := struct {
 		User
 		Asset
 	}{
 		User:  user,
-		Asset: a,
+		Asset: url.Asset,
 	}
 	c.HTML(200, "get-asset.html", page)
 }
