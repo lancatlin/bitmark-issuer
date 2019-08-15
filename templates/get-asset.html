@@ -2,9 +2,9 @@
 {{template "header" .User}}
 <h1>資產：{{.Asset.Name}}</h1>
 <p>請填寫你的帳戶地址，資產將會轉移到以下地址，每個地址只能使用一次</p>
-<form action="/issues" method="post">
-    <input type="text" name="asset_id" id="" value="{{.Asset.ID}}" readonly hidden>
-    <input type="text" name="address" id="" required autofocus>
+<p>總共：{{.Asset.Amount}} 剩餘：{{.Asset.Free}}</p>
+<form action="/get/{{.Asset.URL}}" method="post">
+    <input type="text" name="receiver" id="" required autofocus>
     <input type="submit" value="取得資產">
 </form>
 {{template "footer" .}}

@@ -27,10 +27,11 @@ type Issue struct {
 	Asset   Asset
 	AssetID string
 	// 如果尚未轉移留空
-	Reciever string
+	Receiver string
 	// 如果尚未轉移留空
 	TransferredAt time.Time
 	CreatedAt     time.Time
+	TxID          string
 }
 
 // User ...

@@ -38,11 +38,6 @@ func assetInfo(c *gin.Context) {
 			panic(err)
 		}
 	}
-	var issues []Issue
-	var count int
-	if err := db.Where("asset_id = ?", a.ID).Find(&issues).Count(&count).Error; err != nil {
-		panic(err)
-	}
 	log.Println("fine after genQRCode")
 	page := struct {
 		User
@@ -50,10 +45,9 @@ func assetInfo(c *gin.Context) {
 		Remainder int
 		Host      string
 	}{
-		User:      user,
-		Asset:     a,
-		Remainder: count,
-		Host:      env.Host,
+		User:  user,
+		Asset: a,
+		Host:  env.Host,
 	}
 	c.HTML(200, "asset-info.html", page)
 }
@@ -63,7 +57,7 @@ func getAsset(c *gin.Context) {
 	user := getUser(c)
 	var url URL
 	id := c.Param("id")
-	if err := db.Where("id = ?", id).Preload("Asset").First(&url).Error; err != nil {
+	if err := db.Where("id = ?", id).Preload("Asset").Preload("Asset.URL").First(&url).Error; err != nil {
 		// record not found
 		c.String(404, err.Error())
 		return
@@ -138,7 +132,8 @@ func newAsset(c *gin.Context) {
 			c.String(500, err.Error())
 			return
 		} else {
-			panic(err)
+			c.String(500, err.Error())
+			return
 		}
 		return
 	}

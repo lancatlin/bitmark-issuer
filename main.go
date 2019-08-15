@@ -134,6 +134,6 @@ func main() {
 	r.POST("/assets", withCondition(newAsset, ConditionLogin))
 	r.GET("/assets/:id", withCondition(assetInfo, ConditionLogin))
 	r.GET("/get/:id", getAsset)
-	r.POST("/get/:id")
+	r.POST("/get/:id", transfer)
 	r.Run()
 }

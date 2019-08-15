@@ -68,3 +68,15 @@ func (a *Asset) issue() (err error) {
 	}
 	return nil
 }
+
+// Free return the free issues count of a asset
+func (a Asset) Free() int {
+	if a.ID == "" {
+		return 0
+	}
+	var count int
+	if err := db.Where("asset_id = ?", a.ID).Where("receiver = ''").Find(&[]Issue{}).Count(&count).Error; err != nil {
+		panic(err)
+	}
+	return count
+}
