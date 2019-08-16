@@ -11,7 +11,7 @@ func TestRandomString(t *testing.T) {
 }
 
 func TestGenQRCode(t *testing.T) {
-	if err := genQRCode("test1125"); err != nil {
+	if err := genQRCode("test1125", "/static/qrcodes/test1125"); err != nil {
 		t.Error(err)
 	}
 }

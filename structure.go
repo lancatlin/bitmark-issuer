@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+	"os"
 	"time"
 
 	"github.com/bitmark-inc/bitmark-sdk-go/account"
@@ -75,7 +77,20 @@ type URL struct {
 }
 
 func (u URL) String() string {
-	return u.ID
+	return fmt.Sprintf("%s://%s/get/%s", env.Protocol, env.Host, u.ID)
+}
+
+// QRCode return the file path of the qrcode file
+func (u URL) QRCode() string {
+	file := fmt.Sprintf("static/qrcodes/%s.png", u.ID)
+	if _, err := os.Stat(file); os.IsNotExist(err) {
+		if err := genQRCode(file, u.String()); err != nil {
+			panic(err)
+		}
+	} else if err != nil {
+		panic(err)
+	}
+	return fmt.Sprintf("%s://%s/%s", env.Protocol, env.Host, file)
 }
 
 type message struct {

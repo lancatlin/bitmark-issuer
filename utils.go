@@ -3,7 +3,6 @@ package main
 import (
 	"crypto/rand"
 	"encoding/base64"
-	"fmt"
 	"os"
 
 	qrcode "github.com/skip2/go-qrcode"
@@ -26,11 +25,9 @@ func randomID() string {
 	if _, err := rand.Read(bytes); err != nil {
 		panic(err)
 	}
-	return base64.StdEncoding.EncodeToString(bytes)
+	return base64.URLEncoding.EncodeToString(bytes)
 }
 
-func genQRCode(path string) (err error) {
-	filename := fmt.Sprintf("static/qrcodes/%s.png", path)
-	content := fmt.Sprintf("http://%s/get/%s", env.Host, path)
-	return qrcode.WriteFile(content, qrcode.Medium, 256, filename)
+func genQRCode(filename, url string) (err error) {
+	return qrcode.WriteFile(url, qrcode.Medium, 256, filename)
 }

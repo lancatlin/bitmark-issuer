@@ -18,7 +18,8 @@ import (
 var db *gorm.DB
 
 var env = struct {
-	Host string
+	Host     string
+	Protocol string
 }{}
 
 func init() {
@@ -30,6 +31,10 @@ func init() {
 	db.AutoMigrate(&Asset{}, &Issue{}, &User{}, &URL{})
 
 	env.Host = os.Getenv("HOST")
+	env.Protocol = os.Getenv("PROTOCOL")
+	if env.Protocol == "" {
+		env.Protocol = "http"
+	}
 
 	// init bitmark testnet
 	httpClient := &http.Client{

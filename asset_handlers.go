@@ -3,7 +3,6 @@ package main
 import (
 	"io/ioutil"
 	"log"
-	"os"
 	"strconv"
 	"time"
 
@@ -32,11 +31,6 @@ func assetInfo(c *gin.Context) {
 		}
 		c.HTML(401, "msg.html", page)
 		return
-	}
-	if _, err := os.Stat("/static/qrcodes/" + a.URL.ID + ".png"); os.IsNotExist(err) {
-		if err := genQRCode(a.URL.String()); err != nil {
-			panic(err)
-		}
 	}
 	log.Println("fine after genQRCode")
 	page := struct {

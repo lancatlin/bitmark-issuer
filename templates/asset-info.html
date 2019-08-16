@@ -4,6 +4,6 @@
 
 <h3>限時分享連結</h3>
 <p>總量：{{.Asset.Amount}} 剩餘：{{.Asset.Free}}</p>
-<a href="/get/{{.Asset.URL}}">https://{{.Host}}/get/{{.Asset.URL}}</a><br>
-<img src="/static/qrcodes/{{.Asset.URL}}.png" alt="">
+<a href="{{.Asset.URL}}">{{.Asset.URL}}</a><br>
+<img src="{{.Asset.URL.QRCode}}" alt="">
 {{template "footer" .}}
